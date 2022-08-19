@@ -1,9 +1,26 @@
 import { FC } from "react";
-import "./App.css";
-import { Routes } from "react-router-dom";
-import { routGenerator } from "../routes/routingGenerator";
-import { routList } from "../routes/routsList";
+import styles from "./styles.module.scss";
+import { useRoutes } from "react-router-dom";
+import { Home } from "../pages/home/home";
+import { User } from "../pages/user/user";
 
 export const App: FC = () => {
-  return <Routes>{routGenerator(routList)}</Routes>;
-}
+  const mainRoutes = {
+    path: '/',
+    element: <Home />,
+  };
+
+  const userRoutes = {
+    path: ':userId',
+    element: <User />,
+  };
+
+  const routing = useRoutes([mainRoutes, userRoutes]);
+
+  return( 
+  <main className={styles['page-wrapper']}>
+    <h1>Github Searcher</h1>
+    {routing}
+    </main>
+  );
+};

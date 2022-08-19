@@ -33,15 +33,14 @@ const columns: Column[] = [
 interface ITableProps {
   children?: ReactNode;
   rows: Array<IUser>;
+  title: string;
 }
 
+export const UsersTable: FC<ITableProps> = ({ children, rows, title }) => {
+  const navigate = useNavigate();
 
+  const handleClickByUser = (row: IUser) => navigate(`${row.id}`);
 
-export const UsersTable: FC<ITableProps> = ({ children, rows }) => {
-   const navigate = useNavigate();
-
-   const handleClickByUser = (row: IUser) => navigate(`/user/${row.id}`);
-  
   return (
     <Paper sx={{ width: "100%" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -52,7 +51,7 @@ export const UsersTable: FC<ITableProps> = ({ children, rows }) => {
                 {children}
               </TableCell>
               <TableCell align="center" colSpan={3}>
-                Search a user by name
+                {title}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -71,16 +70,20 @@ export const UsersTable: FC<ITableProps> = ({ children, rows }) => {
             {rows.map((row: IUser) => {
               return (
                 <TableRow
-                 hover role="checkbox" 
-                 tabIndex={-1} 
-                 key={row.id}
-                 onClick={() => handleClickByUser(row)}
-                >                
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={row.id}
+                  onClick={() => handleClickByUser(row)}
+                >
                   {columns.map((column) => {
                     const value = row[column.id];
                     return (
                       <TableCell key={column.id} align={column.align}>
-                        {column.id === 'avatar_url' ? <UserAvatar image={row.avatar_url}/> : value}
+                        {column.id === "avatar_url" 
+                          ? (<UserAvatar image={row.avatar_url} />) 
+                          : (value)
+                        }
                       </TableCell>
                     );
                   })}

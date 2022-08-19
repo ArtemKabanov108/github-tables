@@ -10,3 +10,11 @@ export const GET: GETAxios = (route, payloadForConfigGET) => {
     },
   });
 };
+
+export const GETExec: GETAxios = (url, payloadForConfigGET) => {
+  return axios.get(url, {
+    headers: {
+      authorization: payloadForConfigGET ? payloadForConfigGET : false,
+    },
+  });
+};

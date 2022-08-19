@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { GET } from '../requests/requests';
+import { GET, GETExec } from '../requests/requests';
 
 export const getUser = createAsyncThunk(
   'github/users',
@@ -9,3 +9,14 @@ export const getUser = createAsyncThunk(
     return response;
   },
 );
+
+export const getUserRepos = createAsyncThunk(
+  'github/repos',
+  async (URL: string) => {
+    const response = await GETExec(URL);
+
+    return response;
+  },
+);
+
+
